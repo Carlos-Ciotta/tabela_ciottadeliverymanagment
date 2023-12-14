@@ -55,7 +55,7 @@ def main():
 
     with st.container():
         populate_table()
-        if st.button(“Update Data”):
+        if st.button("Atualizar"):
             st.experimental_rerun()
 if __name__ == "__main__":
     main()
