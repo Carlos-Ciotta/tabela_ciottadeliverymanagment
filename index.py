@@ -25,7 +25,7 @@ def insere_entrega():
     rua = st.text_input("Rua", key="rua_key")
     bairro = st.text_input("Bairro", key="bairro_key")
     #telefone = st.text_input("Telefone", key="telefone_key")
-    previsao = st.text_input("Previsao de Entrega", key = "previsao_key)
+    previsao = st.text_input("Previsao de Entrega", key = "previsao_key")
     if st.button("Enviar Entrega"):
         data = {
             "nome_cliente": nome_cliente,
