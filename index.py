@@ -24,14 +24,14 @@ def insere_entrega():
     nome_cliente = st.text_input("Nome cliente", key="nome_cliente_key")
     rua = st.text_input("Rua", key="rua_key")
     bairro = st.text_input("Bairro", key="bairro_key")
-    telefone = st.text_input("Telefone", key="telefone_key")
+    #telefone = st.text_input("Telefone", key="telefone_key")
 
     if st.button("Enviar Entrega"):
         data = {
             "nome_cliente": nome_cliente,
             "logradouro": rua,
             "bairro": bairro,
-            "telefone": telefone,
+            "telefone": "49911111111",
             "id": 0,
             "status": "Aguardando",
             "hora": "NULL",
