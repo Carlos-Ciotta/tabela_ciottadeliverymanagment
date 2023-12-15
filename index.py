@@ -41,16 +41,15 @@ def insere_entrega():
             "data": "NULL",
             "previsao":previsao
         }
-        #url = 'https://api-production-e20e.up.railway.app/entregas/post'
-        #response = requests.post(url, json=data)
-        #if response.status_code == 200:
-        #    data = response.json()
-        #    print("Dados da API:", data)
-        #else:
-        #    print("Falha na solicitação. Código de status:", response.status_code)
-        #    print("Conteúdo da resposta:", response.text)
-        print(data)
-        #st.write(f"Resposta do servidor: {response.text}")
+        url = 'https://api-production-e20e.up.railway.app/entregas/post'
+        response = requests.post(url, json=data)
+        if response.status_code == 200:
+            data = response.json()
+            print("Dados da API:", data)
+        else:
+            print("Falha na solicitação. Código de status:", response.status_code)
+            print("Conteúdo da resposta:", response.text)
+        st.write(f"Resposta do servidor: {response.text}")
     
 def main():
     st.title("Gestão de Entregas - Ciotta")
