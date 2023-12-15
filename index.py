@@ -4,18 +4,19 @@ import requests
 import pandas as pd
 from PIL import Image
 icon = Image.open('Logo.jpeg')
-
-
+var_status = ['Em andamento', 'Aguardando']
+var_status1 = ['Entregue']
 st.set_page_config(
     page_title="Ciotta - Delivery Managment",
     layout="wide",
     page_icon=icon,
 )
 
-def populate_table():
+def populate_table(var):
     dados = get_all()
     colunas = ["ID", "Nome Cliente", "Rua", "Bairro", "Telefone", "Status", "Hora", "Data", "Previsão de Entrega"]
-    df = pd.DataFrame(dados, columns=colunas)
+    data = pd.DataFrame(dados, columns=colunas)
+    df = data[data['Status'].isin(var)]
     st.table(df)
 
 def insere_entrega():
@@ -57,8 +58,11 @@ def main():
         insere_entrega()
 
     with st.container():
-        populate_table()
+        populate_table(var_status)
         if st.button("Atualizar"):
             st.experimental_rerun()
+    with st.container():
+        if st.button("Ver entregues"):
+            populate_table(var_status1)
 if __name__ == "__main__":
     main()
