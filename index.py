@@ -4,50 +4,52 @@ import requests
 import pandas as pd
 from PIL import Image
 icon = Image.open('Logo.jpeg')
+
+
 st.set_page_config(
     page_title="Ciotta - Delivery Managment",
     layout="wide",
-    page_icon=icon,  # Você pode usar um emoji ou uma URL de uma imagem
+    page_icon=icon,
 )
 
 def populate_table():
     dados = get_all()
-
-    # Criar DataFrame do pandas
     colunas = ["ID", "Nome Cliente", "Rua", "Bairro", "Telefone", "Status", "Hora", "Data", "Previsão de Entrega"]
     df = pd.DataFrame(dados, columns=colunas)
-
-    # Exibir a tabela
     st.table(df)
 
 def insere_entrega():
     nome_cliente = st.text_input("Nome cliente", key="nome_cliente_key")
     rua = st.text_input("Rua", key="rua_key")
     bairro = st.text_input("Bairro", key="bairro_key")
-    #telefone = st.text_input("Telefone", key="telefone_key")
+    telefone = st.text_input("Telefone", key="telefone_key")
+    booleano = st.checkbox('Sem telefone')
+    if booleano or (len(telefone)==0):
+        telefone = "49911111111"
     previsao = st.text_input("Previsao de Entrega", key = "previsao_key")
+
     if st.button("Enviar Entrega"):
         data = {
             "nome_cliente": nome_cliente,
             "logradouro": rua,
             "bairro": bairro,
-            "telefone": "49911111111",
+            "telefone": telefone,
             "id": 0,
             "status": "Aguardando",
             "hora": "NULL",
             "data": "NULL",
             "previsao":previsao
         }
-        url = 'https://api-production-e20e.up.railway.app/entregas/post'
-        response = requests.post(url, json=data)
-        if response.status_code == 200:
-            data = response.json()
-            print("Dados da API:", data)
-        else:
-            print("Falha na solicitação. Código de status:", response.status_code)
-            print("Conteúdo da resposta:", response.text)
-
-        st.write(f"Resposta do servidor: {response.text}")
+        #url = 'https://api-production-e20e.up.railway.app/entregas/post'
+        #response = requests.post(url, json=data)
+        #if response.status_code == 200:
+        #    data = response.json()
+        #    print("Dados da API:", data)
+        #else:
+        #    print("Falha na solicitação. Código de status:", response.status_code)
+        #    print("Conteúdo da resposta:", response.text)
+        print(data)
+        #st.write(f"Resposta do servidor: {response.text}")
     
 def main():
     st.title("Gestão de Entregas - Ciotta")
