@@ -1,8 +1,8 @@
 import streamlit as st
-from controllers import get_all, delete_by_id, put_status
-import requests
+from controllers import get_all,post
 import pandas as pd
 from PIL import Image
+
 icon = Image.open('Logo.jpeg')
 var_status = ['Em andamento', 'Aguardando']
 var_status1 = ['Entregue']
@@ -24,32 +24,28 @@ def insere_entrega():
     rua = st.text_input("Rua", key="rua_key")
     bairro = st.text_input("Bairro", key="bairro_key")
     telefone = st.text_input("Telefone", key="telefone_key")
-    booleano = st.checkbox('Sem telefone')
-    if booleano or (len(telefone)==0):
-        telefone = "49911111111"
     previsao = st.text_input("Previsao de Entrega", key = "previsao_key")
 
+    if (len(telefone)==0):
+        telefone = "49911111111"
+
     if st.button("Enviar Entrega"):
-        data = {
-            "nome_cliente": nome_cliente,
-            "logradouro": rua,
-            "bairro": bairro,
-            "telefone": telefone,
-            "id": 0,
-            "status": "Aguardando",
-            "hora": "NULL",
-            "data": "NULL",
-            "previsao":previsao
-        }
-        url = 'https://api-production-e20e.up.railway.app/entregas/post'
-        response = requests.post(url, json=data)
-        if response.status_code == 200:
-            data = response.json()
-            print("Dados da API:", data)
+        if all(s != "" for s in [nome_cliente, rua, bairro, previsao]):
+            data = {
+                "nome_cliente": nome_cliente,
+                "logradouro": rua,
+                "bairro": bairro,
+                "telefone": telefone,
+                "id": 0,
+                "status": "Aguardando",
+                "hora": "NULL",
+                "data": "NULL",
+                "previsao":previsao
+            }
+            response = post(data)
+            return response
         else:
-            print("Falha na solicitação. Código de status:", response.status_code)
-            print("Conteúdo da resposta:", response.text)
-        st.write(f"Resposta do servidor: {response.text}")
+            return st.write("Campos de texto inválidos")
     
 def main():
     st.title("Gestão de Entregas - Ciotta")
