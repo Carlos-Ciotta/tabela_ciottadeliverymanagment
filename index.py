@@ -62,13 +62,8 @@ def insere_entrega():
                 "data": "NULL",
                 "previsao":previsao
             }
-            aux = verifica_repetidos(data)
-            if aux:
-                response = post(data)
-                return response
-            else:
-                return st.write("Entrega já enviada")
-                
+            response = post(data)
+            return response               
         else:
             return st.write("Campos de texto inválidos")
     
